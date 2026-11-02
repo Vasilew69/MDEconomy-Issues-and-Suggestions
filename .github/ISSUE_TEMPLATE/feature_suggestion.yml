@@ -1,0 +1,79 @@
+name: Suggestion
+description: Suggest a new feature or an improvement for MDEconomy.
+title: "[Suggestion] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make MDEconomy better! Please **search the existing issues** first. If your idea is already there, add a 👍 reaction to it instead of opening a new one; reactions help decide what gets built next.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you suggest
+      options:
+        - label: I searched the existing issues and this has not been suggested yet.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of MDEconomy is this about? You can pick more than one.
+      multiple: true
+      options:
+        - Auction house
+        - Stalls
+        - Trading
+        - Jobs
+        - Economy / currencies
+        - Network sync
+        - Config / messages / GUI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe what you or your players are trying to do and why it is hard or impossible today.
+      placeholder: "On my server players often want to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Your idea
+      description: How would you like it to work? Commands, permissions, config options or GUI changes are all welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Other ways to solve it, workarounds you use now, or how another plugin does it.
+
+  - type: dropdown
+    id: importance
+    attributes:
+      label: How important is this for your server?
+      options:
+        - Nice to have
+        - Important
+        - I cannot use MDEconomy without it
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: MDEconomy version you use
+      placeholder: "1.6.1"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Mockups, screenshots, examples, or anything else.

@@ -1,0 +1,18 @@
+[
+  { "name": "bug",           "color": "d73a4a", "description": "Something in MDEconomy does not work as it should" },
+  { "name": "suggestion",    "color": "a2eeef", "description": "An idea or feature request for MDEconomy" },
+  { "name": "needs-info",    "color": "fbca04", "description": "Waiting for more details from the reporter" },
+  { "name": "confirmed",     "color": "0e8a16", "description": "Reproduced (bug) or accepted (suggestion)" },
+  { "name": "in-progress",   "color": "1d76db", "description": "Being worked on" },
+  { "name": "fixed",         "color": "5319e7", "description": "Fixed or added; ships in the next release" },
+  { "name": "wontfix",       "color": "ffffff", "description": "Will not be fixed or added" },
+  { "name": "duplicate",     "color": "cfd3d7", "description": "Already reported in another issue" },
+  { "name": "auction",       "color": "c5def5", "description": "Area: auction house, bidding, sell screen" },
+  { "name": "stalls",        "color": "c5def5", "description": "Area: player market stalls" },
+  { "name": "trading",       "color": "c5def5", "description": "Area: /trade" },
+  { "name": "jobs",          "color": "c5def5", "description": "Area: jobs" },
+  { "name": "economy",       "color": "c5def5", "description": "Area: balances, /pay, currencies, Vault, taxes" },
+  { "name": "network-sync",  "color": "c5def5", "description": "Area: cross-server sync, MySQL/MongoDB, Redis, BungeeCord/Velocity" },
+  { "name": "config",        "color": "c5def5", "description": "Area: config, messages, GUI and language files" },
+  { "name": "other",         "color": "c5def5", "description": "Area: anything else" }
+]

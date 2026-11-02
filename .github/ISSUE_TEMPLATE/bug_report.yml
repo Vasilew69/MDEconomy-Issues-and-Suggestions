@@ -1,0 +1,172 @@
+name: Bug report
+description: Something in MDEconomy is broken or does not work as described.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. The more of this you fill in, the faster it gets fixed.
+        Before you start, please **update to the latest MDEconomy version** and **search the existing issues** to see if it is already reported.
+        Need setup help instead? Ask on [Discord](https://discord.gg/chQDaW3QXc).
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you report
+      options:
+        - label: I searched the existing issues and this bug is not reported yet.
+          required: true
+        - label: I tested on the latest MDEconomy version, or I wrote the version I use below.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of MDEconomy is affected? You can pick more than one.
+      multiple: true
+      options:
+        - Auction house
+        - Stalls
+        - Trading
+        - Jobs
+        - Economy / currencies
+        - Network sync
+        - Config / messages / GUI
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: MDEconomy version
+      description: Run `/version MDEconomy` in the console.
+      placeholder: "1.6.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: server-software
+    attributes:
+      label: Server software
+      options:
+        - Paper
+        - Purpur
+        - Folia
+        - Spigot
+        - Pufferfish
+        - Leaf
+        - Other (write it in Additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: server-version
+    attributes:
+      label: Server version
+      description: The full output of `/version` in the console.
+      placeholder: "This server is running Paper version 1.21.4-232 (MC: 1.21.4)"
+    validations:
+      required: true
+
+  - type: input
+    id: java-version
+    attributes:
+      label: Java version
+      description: Run `java -version` on the host, or check the start of your server log.
+      placeholder: "21"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: storage
+    attributes:
+      label: Storage type
+      description: "`storage.type` in config.yml."
+      options:
+        - SQLite (default)
+        - MySQL / MariaDB
+        - MongoDB
+    validations:
+      required: true
+
+  - type: dropdown
+    id: setup
+    attributes:
+      label: Single server or network
+      options:
+        - Single server
+        - Network, sync disabled
+        - "Network, sync enabled (messenger: none)"
+        - "Network, sync enabled (messenger: redis)"
+        - "Network, sync enabled (messenger: proxy - BungeeCord / Velocity)"
+    validations:
+      required: true
+
+  - type: input
+    id: economy
+    attributes:
+      label: Economy and related plugins
+      description: Your economy plugin (or MDEconomy's own) and any currency/hook plugins in use.
+      placeholder: "Vault, EssentialsX, PlaceholderAPI, PlayerPoints"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear and short description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact steps so we can make it happen on our test server.
+      placeholder: |
+        1. Run /ah sell 100
+        2. Open /ah and buy the item from another account
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include the exact message players saw if there was one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and errors
+      description: |
+        Paste the full error from the console (from the first line of the stack trace).
+        For long logs, upload `logs/latest.log` to https://mclo.gs and paste the link.
+        **Remove passwords, database URIs and Discord webhook URLs before posting.**
+      render: shell
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Related config
+      description: The part of config.yml (or gui.yml, jobs.yml, messages) that matters for this bug. **Remove passwords and webhook URLs.**
+      render: yaml
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, videos, other plugins that might be involved, or anything else.

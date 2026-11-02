@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support and questions (Discord)
+    url: https://discord.gg/chQDaW3QXc
+    about: Setup help, "how do I...", and anything that is not a bug or a suggestion. Fastest answers are on Discord.
+  - name: License, purchase and download problems (Discord)
+    url: https://discord.gg/chQDaW3QXc
+    about: Please do not post order numbers or license details here. Open a ticket on Discord instead.

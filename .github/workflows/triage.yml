@@ -1,0 +1,92 @@
+name: Triage issues
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+jobs:
+  area-labels:
+    name: Label by area
+    if: ${{ github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'edited') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            // Maps the "Area" dropdown in the issue forms to area labels.
+            const areas = {
+              'Auction house': 'auction',
+              'Stalls': 'stalls',
+              'Trading': 'trading',
+              'Jobs': 'jobs',
+              'Economy / currencies': 'economy',
+              'Network sync': 'network-sync',
+              'Config / messages / GUI': 'config',
+              'Other': 'other',
+            };
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            const labels = new Set();
+
+            const section = body.match(/###\s*Area\s*\n+([^\n#][^\n]*)/i);
+            if (section) {
+              for (const part of section[1].split(',')) {
+                const label = areas[part.trim()];
+                if (label) labels.add(label);
+              }
+            }
+            // Bugs on a network with sync enabled also get the network-sync label.
+            if (/###\s*Single server or network\s*\n+Network, sync enabled/i.test(body)) {
+              labels.add('network-sync');
+            }
+
+            const current = new Set(issue.labels.map(l => l.name));
+            const toAdd = [...labels].filter(l => !current.has(l));
+            if (toAdd.length) {
+              await github.rest.issues.addLabels({
+                ...context.repo, issue_number: issue.number, labels: toAdd,
+              });
+              core.info(`Added labels: ${toAdd.join(', ')}`);
+            } else {
+              core.info('No area labels to add.');
+            }
+
+  needs-info-added:
+    name: Ask for more info
+    if: ${{ github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'needs-info' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const author = context.payload.issue.user.login;
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: `Hi @${author}, we need a bit more information to look into this. ` +
+                `Please reply here with what a maintainer asked for, or anything missing from the template (logs, exact steps, versions or config). ` +
+                `The \`needs-info\` label is removed automatically when you reply.`,
+            });
+
+  needs-info-answered:
+    name: Remove needs-info on reply
+    if: >-
+      ${{ github.event_name == 'issue_comment' &&
+          !github.event.issue.pull_request &&
+          github.event.comment.user.login == github.event.issue.user.login &&
+          contains(github.event.issue.labels.*.name, 'needs-info') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.removeLabel({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              name: 'needs-info',
+            });
